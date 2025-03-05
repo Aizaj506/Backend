@@ -1,0 +1,16 @@
+{
+  "name": "backendwithnode",
+  "version": "1.0.0",
+  "description": "backend practice with node.js",
+  "keywords": [
+    "backend",
+    "javascript"
+  ],
+  "license": "ISC",
+  "author": "Aizaj Ahmed",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
