@@ -12,8 +12,7 @@ export {asyncHanlder};
 ✔ Automatically async/await errors ko next() me pass karega.
 ✔ Har route me try-catch likhne ki zaroorat nahi hogi. */
 
-
-// const asyncHanlder = (func) => {()=>{}}
+ //const asyncHanlder = (func) => {()=>{}}
 
 // const asyncHanlder = (func) => async (req, res, next) => {
 //     try {
