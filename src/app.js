@@ -17,5 +17,12 @@ app.use(express.urlencoded({extended: true, limit:"16kb"})); // URL Encoded Data
 app.use(express.static("public")); // Static File Serving
 app.use(cookieParser()) // Client se aane wali cookies ko "req.cookies" me parse karta hai.
 
+// Routes import
+import userRouter from './routes/user.routes.js'
+
+// Routes Declaration
+app.use("/api/v1/users", userRouter);
+
+
 
 export { app };
