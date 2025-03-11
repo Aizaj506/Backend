@@ -1,18 +1,18 @@
 /* Agar har route me try-catch likhna pade to bohot repetitive ho jata hai. 
  Isko avoid karne ke liye ek async wrapper function likhenge: */
-const asyncHanlder = (requestHandler) =>{
+const asyncHanlder = (requestHandler) => {
     return (req, res, next) => {
-        Promise.resolve(requestHandler(req, res, next)).catch((err)=>next(err))
+        Promise.resolve(requestHandler(req, res, next)).catch((err) => next(err))
     }
 }
 
-export {asyncHanlder};
+export { asyncHanlder };
 
 /*👆 Yeh function:
 ✔ Automatically async/await errors ko next() me pass karega.
 ✔ Har route me try-catch likhne ki zaroorat nahi hogi. */
 
- //const asyncHanlder = (func) => {()=>{}}
+//const asyncHanlder = (func) => {()=>{}}
 
 // const asyncHanlder = (func) => async (req, res, next) => {
 //     try {

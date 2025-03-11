@@ -57,7 +57,7 @@ const userSchema = new Schema({
 // Hash password before saving to DB
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) return next(); //If Password is not modified
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next();
 })
 
@@ -80,7 +80,7 @@ userSchema.methods.generateAccessToken = function () {
     )
 }
 
-userSchema.methods.generateRefreshToken = function () { 
+userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id,
