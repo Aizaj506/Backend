@@ -129,14 +129,17 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // Logic for Refresh the Access Token
 const refreshAccessToken = asyncHandler(async (req, res) => {
+    // For web apps (cookies) and mobile apps (body)
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
     if (!incomingRefreshToken) {
         throw new ApiError(401, "Unauthorized request!")
     }
 
-    const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
-    if (!decodedToken) {
-        throw new ApiError(401, "Invalid refresh token!")
+    let decodedToken ;
+    try {
+        decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+    } catch (error) {
+        throw new ApiError(401, "Invalid or expired refresh token!");
     }
 
     const user = await User.findById(decodedToken?.id);
@@ -148,13 +151,17 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Refresh token is expired or used!");
     }
 
+    // Generate new tokens
+    const { accessToken, newRefreshToken } = await generateAccessAndRefreshTokens(user.id)
+    
+    // Update refresh token in DB
+    // user.refreshToken = newRefreshToken;
+    // await user.save({ validateBeforeSave: true });
+
     const options = {
         httpOnly: true,
         secure: true,
     }
-
-    // Generate new tokens
-    const { accessToken, newRefreshToken } = await generateAccessAndRefreshTokens(user.id)
 
     return res
         .status(200)
